@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🫧 Shot de Bubbles · ज्ञान बुलबुले 📿</title>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#160a2e; --bg2:#2a1052;
+  --saffron:#ff9933; --gold:#ffd700; --deepgold:#c77f1a;
+  --cream:#f7ead0; --ink:#4a2c10; --paper:#f0dfb8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Tiro Devanagari Hindi',serif;
+  background:radial-gradient(1200px 800px at 70% -10%,#3b1668 0%,transparent 60%),
+             radial-gradient(900px 700px at 10% 110%,#411a4e 0%,transparent 55%),
+             linear-gradient(160deg,var(--bg1),var(--bg2) 60%,#1b0a38);
+  color:var(--cream);min-height:100svh;overflow-x:hidden;
+}
+/* ---------- fondo flotante ---------- */
+.fchar{position:fixed;bottom:-70px;color:var(--gold);opacity:0;font-size:var(--s);left:var(--x);
+  animation:rise var(--d) linear var(--dl) infinite;z-index:0;pointer-events:none;
+  text-shadow:0 0 12px rgba(255,200,80,.7);font-family:'Tiro Devanagari Hindi',serif;will-change:transform}
+.femo{position:fixed;bottom:-70px;left:var(--x);font-size:var(--s);opacity:0;
+  animation:rise var(--d) linear var(--dl) infinite;z-index:0;pointer-events:none;filter:drop-shadow(0 0 8px rgba(255,170,60,.7))}
+@keyframes rise{
+  0%{transform:translate(0,0) rotate(0deg);opacity:0}
+  8%{opacity:var(--o)}
+  45%{transform:translate(var(--sway),-55vh) rotate(20deg)}
+  92%{opacity:var(--o)}
+  100%{transform:translate(calc(var(--sway) * -1),-115vh) rotate(45deg);opacity:0}
+}
+.glow{position:fixed;border-radius:50%;filter:blur(70px);opacity:.35;z-index:0;pointer-events:none;
+  animation:pulse 6s ease-in-out infinite alternate;will-change:opacity}
+@keyframes pulse{from{opacity:.15}to{opacity:.45}}
+.mandala{position:fixed;width:min(46vw,420px);z-index:0;pointer-events:none;animation:spin 90s linear infinite;opacity:.9}
+.mandala.tr{top:-90px;right:-90px}
+.mandala.bl{bottom:-110px;left:-110px;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.garland{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:2px 8px 0;
+  z-index:3;pointer-events:none;font-size:17px}
+.garland span{display:inline-block;transform-origin:top center;animation:sway 3.2s ease-in-out infinite alternate;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+@keyframes sway{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+/* ---------- estructura ---------- */
+main{position:relative;z-index:2;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:56px 14px 40px}
+.screen{display:none;width:100%;max-width:740px}
+.screen.active{display:block;animation:fadeUp .55s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.title{font-family:'Yatra One',cursive;text-align:center;font-size:clamp(30px,6vw,52px);line-height:1.1;
+  background:linear-gradient(180deg,#ffe9a8,var(--saffron) 55%,#ffce54);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(255,170,60,.45));margin-bottom:4px}
+.subtitle{text-align:center;color:#e9c86e;font-size:clamp(14px,2.6vw,19px);margin-bottom:22px;letter-spacing:.5px}
+.subtitle .deva{color:var(--gold);text-shadow:0 0 10px rgba(255,215,0,.6)}
+/* ---------- pergamino ---------- */
+.parchment{
+  position:relative;color:var(--ink);
+  background:radial-gradient(ellipse at 28% 18%,#faf0dc 0%,#f0dfb8 55%,#e2c88f 100%);
+  border:2px solid #a8742a;border-radius:22px 8px 26px 10px/10px 24px 8px 26px;
+  box-shadow:0 24px 60px rgba(0,0,0,.55),inset 0 0 70px rgba(150,100,30,.28);
+  padding:30px 28px 26px;
+}
+.parchment::before,.parchment::after{position:absolute;font-size:22px;color:#8a5a12;text-shadow:0 1px 0 #ffe9b0;pointer-events:none}
+.parchment::before{content:'❁';top:6px;left:10px}
+.parchment::after{content:'❁';top:6px;right:10px}
+.corner{position:absolute;font-size:22px;color:#8a5a12;text-shadow:0 1px 0 #ffe9b0;pointer-events:none}
+.corner.bl{bottom:6px;left:10px}
+.corner.br{bottom:6px;right:10px}
+.parchment h2{font-family:'Yatra One',cursive;color:#6b3b06;font-size:clamp(20px,4vw,27px);margin-bottom:12px;text-align:center}
+.parchment label{font-weight:bold;color:#5d3205}
+#material{
+  width:100%;min-height:190px;margin-top:8px;padding:14px 16px;font-family:inherit;font-size:16px;color:#3d2408;
+  background:repeating-linear-gradient(transparent 0 27px,rgba(150,100,30,.18) 27px 28px),#fdf3da;
+  border:2px dashed #b08030;border-radius:12px;resize:vertical;outline:none;line-height:28px;
+}
+#material:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,153,51,.25)}
+details{margin-top:12px;font-size:15px;color:#6b3b06}
+summary{cursor:pointer;font-weight:bold}
+details .example{background:rgba(160,110,40,.12);border-left:4px solid var(--saffron);border-radius:8px;padding:10px 14px;margin-top:8px;white-space:pre-line}
+.ai-box{background:rgba(139,92,246,.1);border-left:4px solid #8b5cf6;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:14px}
+.ai-box input{width:100%;margin:4px 0 10px;padding:8px 12px;font-family:inherit;font-size:15px;color:#3d2408;background:#fdf3da;border:2px solid #b08030;border-radius:10px;outline:none}
+.ai-box input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.2)}
+/* barra visible de API key de Groq */
+.ai-bar{margin-top:14px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(88,28,135,.1));border:2px solid #8b5cf6;border-radius:14px;padding:12px 16px;box-shadow:0 0 18px rgba(139,92,246,.28),inset 0 0 14px rgba(139,92,246,.08)}
+.ai-bar-title{font-family:'Yatra One',cursive;font-size:17px;color:#5b21b6;margin-bottom:8px;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.ai-bar-title .tag{font-size:12px;background:#8b5cf6;color:#fff;border-radius:20px;padding:2px 10px;vertical-align:2px;margin-left:6px}
+.ai-bar label{display:block;font-weight:700;font-size:12.5px;letter-spacing:.6px;color:#6d28d9;margin-bottom:4px}
+.ai-bar input{width:100%;margin:0 0 6px;padding:10px 14px;font-family:inherit;font-size:16px;color:#3d2408;background:#fdf3da;border:2px solid #8b5cf6;border-radius:12px;outline:none;box-shadow:inset 0 2px 5px rgba(0,0,0,.12)}
+.ai-bar input:focus{border-color:#6d28d9;box-shadow:0 0 0 3px rgba(139,92,246,.25),inset 0 2px 5px rgba(0,0,0,.12)}
+.ai-note{font-size:12.5px;color:#5b21b6;margin:4px 0 0;line-height:1.45}
+/* leyenda de respuestas A/B/C */
+.ans-legend{display:flex;flex-direction:column;gap:6px;margin:10px auto 0;max-width:640px;width:100%;max-height:26svh;overflow-y:auto;padding:2px 4px 2px 2px;overflow-anchor:none}
+.ans-legend::-webkit-scrollbar{width:9px}
+.ans-legend::-webkit-scrollbar-thumb{background:var(--saffron);border-radius:9px}
+.ans-item{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#f7e7c3,#eed7a4);border:2px solid #b08030;border-radius:12px;padding:6px 12px;color:#3d2408;font-size:15px;text-align:left;line-height:1.35;box-shadow:0 2px 6px rgba(0,0,0,.25);overflow-wrap:anywhere;white-space:normal}
+.ans-chip{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe082,#ffb300);border:2px solid #ffd700;color:#5a3200;font:700 16px 'Yatra One',cursive;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,.35)}
+#setupMsg{min-height:24px;margin-top:10px;text-align:center;font-weight:bold;color:#a33307}
+/* ---------- botones ---------- */
+.btn{
+  font-family:'Yatra One',cursive;font-size:clamp(17px,3vw,21px);color:#3a1c05;cursor:pointer;
+  background:linear-gradient(180deg,#ffd977,var(--saffron) 60%,#f07c13);
+  border:2px solid #8a4d08;border-radius:999px;padding:13px 30px;
+  box-shadow:0 8px 22px rgba(255,140,30,.4),inset 0 2px 0 rgba(255,255,255,.55);
+  transition:transform .15s ease,box-shadow .15s ease;text-shadow:0 1px 0 rgba(255,255,255,.4);
+}
+.btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 30px rgba(255,150,40,.55),inset 0 2px 0 rgba(255,255,255,.55)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn.secondary{background:linear-gradient(180deg,#caa6ff,#8b5cf6 60%,#6d28d9);color:#fff;border-color:#3b1470;
+  box-shadow:0 8px 22px rgba(139,92,246,.45),inset 0 2px 0 rgba(255,255,255,.4);text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.btn.small{font-size:15px;padding:8px 18px}
+.btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn.pulse{animation:pulseGlow 1.8s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 8px 22px rgba(255,140,30,.4),0 0 0 0 rgba(255,180,60,.5)}50%{box-shadow:0 8px 26px rgba(255,160,50,.65),0 0 0 14px rgba(255,180,60,0)}}
+/* ---------- juego: bubble shooter ---------- */
+.game-hud{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.hud-chip{font-family:'Yatra One',cursive;background:rgba(0,0,0,.4);border:2px solid var(--gold);color:var(--gold);
+  padding:4px 16px;border-radius:999px;font-size:17px;text-shadow:0 0 10px rgba(255,215,0,.55);white-space:nowrap}
+#qNum{font-family:'Yatra One',cursive;color:var(--saffron);font-size:clamp(15px,2.8vw,19px);text-shadow:0 0 12px rgba(255,153,51,.5);white-space:nowrap}
+#dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,215,0,.4);transition:all .3s}
+.dot.current{background:var(--saffron);box-shadow:0 0 10px var(--saffron);transform:scale(1.25)}
+.dot.done{background:linear-gradient(135deg,var(--gold),var(--saffron));box-shadow:0 0 8px rgba(255,200,60,.7)}
+#qBanner{
+  background:linear-gradient(180deg,#ff5fa2,#e91e63 60%,#c2185b);
+  border:3px solid #ffd54f;border-radius:18px;
+  box-shadow:0 6px 0 #880e4f,0 10px 26px rgba(0,0,0,.5),0 0 24px rgba(255,95,162,.55);
+  padding:12px 18px;text-align:center;margin-bottom:12px;
+  font-family:'Yatra One',cursive;color:#fff;font-size:clamp(17px,3.6vw,24px);
+  text-shadow:0 2px 0 rgba(0,0,0,.35);line-height:1.25;
+}
+#qBanner.pop{animation:bannerPop .45s cubic-bezier(.2,1.5,.4,1)}
+@keyframes bannerPop{0%{transform:scale(.55) rotate(-2deg)}60%{transform:scale(1.06)}100%{transform:scale(1) rotate(0)}}
+.field-wrap{position:relative}
+#field{
+  display:block;width:100%;max-width:640px;margin:0 auto;border:4px solid #7c4dff;border-radius:20px;
+  box-shadow:0 0 34px rgba(124,77,255,.55),0 18px 50px rgba(0,0,0,.55);
+  touch-action:none;cursor:crosshair;background:#1b1040;
+}
+.hint{text-align:center;color:#b08dc9;font-size:13px;margin-top:8px}
+.feedback{
+  position:absolute;left:0;right:0;top:56%;text-align:center;pointer-events:none;
+  font-family:'Yatra One',cursive;font-size:clamp(22px,5vw,34px);min-height:44px;
+}
+.feedback.bad{color:#ff8a75;text-shadow:0 0 16px rgba(255,90,60,.7),0 3px 0 rgba(0,0,0,.4);animation:fbIn .4s ease}
+.feedback.good{color:#ffe259;text-shadow:0 0 20px rgba(255,215,0,.8),0 3px 0 rgba(0,0,0,.4);animation:fbIn .4s ease}
+@keyframes fbIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+#nextBtn{display:none}
+#nextBtn.show{display:inline-block;animation:fbIn .35s ease}
+#field.shake{animation:fieldShake .45s ease}
+@keyframes fieldShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-7px)}80%{transform:translateX(5px)}}
+/* ---------- dashboard ---------- */
+.dash-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.dash-head h2{font-family:'Yatra One',cursive;color:var(--saffron);font-size:clamp(22px,4.6vw,30px);text-shadow:0 0 14px rgba(255,153,51,.5)}
+#dashCount{color:#e9c86e;font-size:15px}
+#dashList{display:flex;flex-direction:column;gap:12px;max-height:60svh;overflow-y:auto;padding:4px}
+#dashList::-webkit-scrollbar{width:9px}
+#dashList::-webkit-scrollbar-thumb{background:var(--saffron);border-radius:9px}
+.dash-row{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:16px;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,215,0,.3);transition:all .2s}
+.dash-row:hover{background:rgba(255,200,90,.14);transform:translateX(6px);border-color:var(--saffron)}
+.dash-num{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--saffron));color:#4a2405;font-family:'Yatra One',cursive;font-size:17px;
+  box-shadow:0 0 12px rgba(255,180,60,.5)}
+.dash-text{flex:1;min-width:0}
+.dash-q{color:#fff3d6;font-weight:bold;font-size:16px;line-height:1.3}
+.dash-a{color:#c9a1ff;font-size:14px;margin-top:3px;line-height:1.4;overflow-wrap:anywhere;white-space:normal}
+.play-btn{flex:none;font-size:20px;background:none;border:none;cursor:pointer;transition:transform .15s}
+.play-btn:hover{transform:scale(1.35)}
+/* ---------- victoria ---------- */
+#screen-win{text-align:center}
+.trophy{font-size:clamp(64px,14vw,110px);animation:trophyIn .8s cubic-bezier(.2,1.6,.4,1) both;filter:drop-shadow(0 0 30px rgba(255,200,60,.8))}
+@keyframes trophyIn{from{opacity:0;transform:scale(0) rotate(-30deg)}to{opacity:1;transform:none}}
+.win-title{font-family:'Yatra One',cursive;font-size:clamp(26px,6vw,40px);margin:10px 0 4px;
+  background:linear-gradient(180deg,#ffe9a8,var(--saffron));-webkit-background-clip:text;background-clip:text;color:transparent}
+.win-msg{color:#e9c86e;font-size:clamp(16px,3.2vw,21px);margin-bottom:18px}
+.win-stats{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.stat{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,215,0,.35);border-radius:16px;padding:14px 22px;min-width:110px}
+.stat .num{font-family:'Yatra One',cursive;font-size:30px;color:var(--gold)}
+.stat .lbl{font-size:13px;color:#d9b45c;letter-spacing:1px}
+/* ---------- partículas y controles ---------- */
+.particle{position:fixed;pointer-events:none;font-size:22px;z-index:60;animation:fly 1.25s ease-out forwards;will-change:transform,opacity}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.35);opacity:0}}
+.controls{position:fixed;top:38px;right:12px;z-index:50;display:flex;gap:8px}
+.ctrl{width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(255,215,0,.5);cursor:pointer;font-size:19px;
+  background:rgba(30,12,60,.75);backdrop-filter:blur(4px);transition:transform .15s;color:#fff}
+.ctrl:hover{transform:scale(1.15)}
+footer{position:fixed;bottom:8px;left:0;right:0;text-align:center;z-index:2;color:#b08dc9;font-size:13px;opacity:.8;pointer-events:none}
+@media (max-width:480px){.garland span{font-size:13px}.parchment{padding:22px 16px}}
+</style>
+</head>
+<body>
+
+<div class="garland" id="garland"></div>
+<svg class="mandala tr" viewBox="0 0 200 200" aria-hidden="true">
+  <g fill="none" stroke="#ffd700" stroke-opacity="0.16">
+    <circle cx="100" cy="100" r="95" stroke-dasharray="4 7"/>
+    <circle cx="100" cy="100" r="74" stroke-dasharray="2 9"/>
+    <circle cx="100" cy="100" r="52"/>
+    <g class="petals" stroke-opacity="0.22"><ellipse cx="100" cy="52" rx="11" ry="27"/></g>
+  </g>
+</svg>
+<svg class="mandala bl" viewBox="0 0 200 200" aria-hidden="true">
+  <g fill="none" stroke="#ff9933" stroke-opacity="0.14">
+    <circle cx="100" cy="100" r="95" stroke-dasharray="5 8"/>
+    <circle cx="100" cy="100" r="72" stroke-dasharray="2 8"/>
+    <circle cx="100" cy="100" r="50"/>
+    <g class="petals" stroke-opacity="0.2"><ellipse cx="100" cy="54" rx="12" ry="25"/></g>
+  </g>
+</svg>
+
+<div class="controls">
+  <button class="ctrl" id="homeBtn" title="Inicio">🏠</button>
+  <button class="ctrl" id="muteBtn" title="Sonido">🔊</button>
+</div>
+
+<main>
+  <!-- SETUP -->
+  <section id="screen-setup" class="screen active">
+    <h1 class="title">🫧 Shot de Bubbles 🫧</h1>
+    <p class="subtitle"><span class="deva">ज्ञान बुलबुले</span> · gotas de sabiduría · <span class="deva">ॐ</span></p>
+    <div class="parchment">
+      <span class="corner bl">❁</span><span class="corner br">❁</span>
+      <h2>📜 Tu material sagrado</h2>
+      <label for="material">Escribe o pega tus preguntas, una por línea, en este formato:</label>
+      <textarea id="material" placeholder="¿Capital de Francia? | París&#10;¿Río más largo del mundo? | El Amazonas&#10;¿Planeta rojo? | Marte"></textarea>
+      <details>
+        <summary>❓ ¿Cómo escribo mi material?</summary>
+        <div class="example">PREGUNTA | RESPUESTA
+
+¿Capital de Francia? | París
+¿Autor de "Don Quijote"? | Cervantes
+¿5 + 7? | 12</div>
+      </details>
+      <div class="ai-bar">
+        <div class="ai-bar-title">🤖 Respuestas erróneas con IA de Groq <span class="tag">opcional</span></div>
+        <label for="groqKey">🔑 API KEY DE GROQ</label>
+        <input type="password" id="groqKey" placeholder="Pega aquí tu key (gsk_...)" autocomplete="off">
+        <p class="ai-note">🆓 Consíguela gratis en <b>console.groq.com/keys</b> (API Keys). La IA inventará 2 respuestas incorrectas creíbles (¡que confunden! 🤯) para cada pregunta. Si la dejas vacía, se usan distractores de tu propio material. Tu key solo se guarda en tu navegador 🔒</p>
+        <details>
+          <summary>🧠 Modelo (avanzado)</summary>
+          <div class="ai-box">
+            <label for="groqModel">Modelo:</label>
+            <input type="text" id="groqModel" value="qwen/qwen3.8-27b">
+          </div>
+        </details>
+      </div>
+      <div id="setupMsg"></div>
+      <div class="btn-row">
+        <button class="btn pulse" id="playBtn">🎮 ¡A JUGAR!</button>
+        <button class="btn secondary" id="dashBtn">📋 DASHBOARD</button>
+        <button class="btn small secondary" id="clearBtn" style="align-self:center">🧹 Limpiar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="screen-dash" class="screen">
+    <div class="dash-head">
+      <h2>📋 Dashboard <span style="font-size:.6em">· पाठ</span></h2>
+      <span id="dashCount"></span>
+    </div>
+    <div id="dashList"></div>
+    <div class="btn-row">
+      <button class="btn secondary" id="dashBackBtn">⬅ VOLVER</button>
+      <button class="btn" id="dashPlayAllBtn">🎮 ¡TODAS AL AZAR!</button>
+    </div>
+  </section>
+
+  <!-- JUEGO: BUBBLE SHOOTER -->
+  <section id="screen-game" class="screen">
+    <div class="game-hud">
+      <div class="hud-chip" id="scoreChip">🏅 000</div>
+      <span id="qNum"></span>
+      <div id="dots"></div>
+    </div>
+    <div id="qBanner"><span id="qText"></span></div>
+    <div class="ans-legend" id="ansLegend"></div>
+    <div class="field-wrap">
+      <canvas id="field" width="640" height="640"></canvas>
+      <div class="feedback" id="feedback"></div>
+    </div>
+    <p class="hint" id="hint">🎯 Apunta con el mouse (o tu dedo), haz clic para disparar y explota la burbuja con la LETRA de la respuesta correcta (A, B o C) 🫧</p>
+    <div class="btn-row">
+      <button class="btn pulse" id="nextBtn">SIGUIENTE ➡️</button>
+    </div>
+  </section>
+
+  <!-- VICTORIA -->
+  <section id="screen-win" class="screen">
+    <div class="trophy">🪔</div>
+    <h2 class="win-title">¡MANTRA COMPLETO!</h2>
+    <p class="win-msg" id="winMsg"></p>
+    <div class="win-stats" id="winStats"></div>
+    <div class="btn-row">
+      <button class="btn" id="againBtn">🔁 JUGAR DE NUEVO</button>
+      <button class="btn secondary" id="winDashBtn">📋 DASHBOARD</button>
+      <button class="btn secondary" id="winEditBtn">✏️ EDITAR MATERIAL</button>
+    </div>
+  </section>
+</main>
+
+<footer>Hecho con 💛 y mucho chai 🍵 · ॐ शान्तिः</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const LS_KEY = 'shotBubblesMaterial_v1';
+
+/* ---------- estado ---------- */
+let questions = [], deck = [], idx = 0, totalWrong = 0, score = 0;
+let wrongCache = {}, aiNote = '';
+const HINT_BASE = '🎯 Apunta con el mouse (o tu dedo), haz clic para disparar y explota la burbuja con la LETRA de la respuesta correcta (A, B o C) 🫧';
+
+/* ---------- Groq IA: distractores ---------- */
+function groqConfig(){
+  return {
+    key: ($('#groqKey').value || '').trim(),
+    model: ($('#groqModel').value || '').trim() || 'qwen/qwen3.8-27b'
+  };
+}
+
+async function fetchWrongAnswers(list){
+  const { key, model } = groqConfig();
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), 18000);
+  try{
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model,
+        temperature: 0.9,
+        messages: [
+          { role: 'system', content: 'Generas distractores incorrectos para un juego educativo de preguntas y respuestas.' },
+          { role: 'user', content: 'Para cada elemento de este JSON genera exactamente 2 respuestas INCORRECTAS pero plausibles: mismo idioma, estilo y longitud similar a la respuesta correcta. Nunca uses la respuesta correcta, ni las respuestas correctas de otros elementos, ni las repetidas entre sí.\n\nJSON:\n' + JSON.stringify(list) + '\n\nResponde ÚNICAMENTE con un JSON array exactamente así: [{"i":0,"wrong":["distractor 1","distractor 2"]},...] donde i es el índice (desde 0) del elemento. Sin texto ni formato adicional.' }
+        ]
+      }),
+      signal: ctrl.signal
+    });
+    if(!res.ok) throw new Error('Groq HTTP ' + res.status);
+    const data = await res.json();
+    const txt = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
+    const s = txt.indexOf('['), e = txt.lastIndexOf(']');
+    if(s < 0 || e <= s) throw new Error('respuesta sin JSON');
+    const arr = JSON.parse(txt.slice(s, e + 1));
+    const map = {};
+    for(const it of arr){
+      const i = it.i;
+      const clean = [...new Set((it.wrong || [])
+        .map(x => String(x).replace(/\s+/g, ' ').trim())
+        .filter(x => x && x.length > 1 && x.toLowerCase() !== String(list[i] && list[i].a || '').toLowerCase()))];
+      if(typeof i === 'number' && i >= 0 && i < list.length && clean.length >= 2)
+        map[i] = [clean[0], clean[1]];
+    }
+    return map;
+  } finally { clearTimeout(to); }
+}
+
+/* ---------- sonido ---------- */
+let actx = null, muted = false;
+function note(f, t = 0, d = .18, type = 'sine', v = .14){
+  if(muted) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if(actx.state === 'suspended') actx.resume();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = f; o.connect(g); g.connect(actx.destination);
+    const st = actx.currentTime + t;
+    g.gain.setValueAtTime(0, st);
+    g.gain.linearRampToValueAtTime(v, st + .02);
+    g.gain.exponentialRampToValueAtTime(.001, st + d);
+    o.start(st); o.stop(st + d + .05);
+  }catch(e){}
+}
+const playCorrect = () => { note(523,0); note(659,.1); note(784,.2,.28); note(1047,.3,.4); };
+const playWrong   = () => { note(150,0,.28,'sawtooth',.06); note(115,.09,.28,'sawtooth',.05); };
+
+/* ---------- utilidades ---------- */
+const shuffle = a => { for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+function parseMaterial(text){
+  return text.split(/\r?\n/)
+    .map(l => l.trim()).filter(Boolean)
+    .map(l => l.split('|'))
+    .filter(p => p.length >= 2 && p[0].trim() && p.slice(1).join('|').trim())
+    .map(p => ({ q: p[0].trim(), a: p.slice(1).join('|').trim() }));
+}
+
+/* ---------- pantallas ---------- */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $('#screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function ensureQuestions(){
+  questions = parseMaterial($('#material').value);
+  if(questions.length === 0){
+    $('#setupMsg').textContent = '⚠️ Agrega al menos una línea con formato: PREGUNTA | RESPUESTA';
+    return false;
+  }
+  $('#setupMsg').textContent = '';
+  return true;
+}
+
+/* ============================================================
+   BUBBLE SHOOTER (canvas)
+============================================================ */
+const cv = $('#field'), ctx = cv.getContext('2d');
+const W = 640, H = 640;
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+cv.width = W * DPR; cv.height = H * DPR; ctx.scale(DPR, DPR);
+
+const CANDY = ['#29b6f6','#ab47bc','#ec407a','#ffca28','#ef5350','#7e57c2','#26c6da'];
+const PRAISES = ['INCREDIBLE!!!','¡GENIAL!','¡FANTÁSTICO!','¡BRUTAL!','¡WOW!','¡IMPRESIONANTE!'];
+const SX = W / 2, SY = H - 56, PROJ_R = 15, TOP_LIMIT = PROJ_R + 4;
+
+let decos = [], answers = [], particles = [], popups = [], stars = [];
+let proj = null, aimAng = -Math.PI / 2, state = 'idle', centerMsg = null;
+let combo = 0, lastPop = 0, ammoColor = pick(CANDY);
+
+for(let i = 0; i < 42; i++)
+  stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.6 + .6, ph: Math.random() * 6.28 });
+
+function shade(hex, amt){
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, Math.min(255, (n >> 16) + amt));
+  const g = Math.max(0, Math.min(255, ((n >> 8) & 255) + amt));
+  const b = Math.max(0, Math.min(255, (n & 255) + amt));
+  return `rgb(${r},${g},${b})`;
+}
+
+function drawBubble(x, y, r, color){
+  const g = ctx.createRadialGradient(x - r * .35, y - r * .42, r * .08, x, y, r * 1.05);
+  g.addColorStop(0, 'rgba(255,255,255,.95)');
+  g.addColorStop(.28, shade(color, 45));
+  g.addColorStop(.8, color);
+  g.addColorStop(1, shade(color, -50));
+  ctx.beginPath(); ctx.arc(x, y, r, 0, 7);
+  ctx.fillStyle = g; ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = shade(color, -70); ctx.stroke();
+}
+
+function ansY(a, now){ return a.y + Math.sin(now / 600 + a.phase) * 7; }
+
+function layoutDecorative(){
+  decos = [];
+  const r = 20, rowH = r * 1.74, cols = 9;
+  let k = 0;
+  for(let row = 0; row < 4; row++){
+    const y = 30 + row * rowH;
+    const off = (row % 2) ? r * 1.01 : 0;
+    for(let c = 0; c < cols; c++){
+      const x = off + 26 + c * r * 2.04;
+      if(x > W - 20 || Math.random() < .12) continue;
+      decos.push({ x, y, r, color: pick(CANDY), born: performance.now() + (k++) * 18 });
+    }
+  }
+}
+
+function buildAnswers(qa, wrongs){
+  let picks;
+  if(wrongs && wrongs.length >= 2){
+    picks = wrongs.slice(0, 2).map(w => String(w).replace(/\s+/g, ' ').trim());
+  }else{
+    const pool = [...new Set(questions.filter(x => x.a.toLowerCase() !== qa.a.toLowerCase()).map(x => x.a))];
+    shuffle(pool);
+    picks = pool.slice(0, 2);
+    const fillers = ['¡Ni idea! 🙈','El número 42 🌀','Pregúntale al gurú 🧘‍♂️','Está en las estrellas ✨','El karma lo decide ☯️','Un secreto sagrado 🔮','Ni los dioses lo saben 😅'];
+    shuffle(fillers);
+    let fi = 0;
+    while(picks.length < 2) picks.push(fillers[fi++ % fillers.length]);
+  }
+  const opts = shuffle([{t: qa.a, ok: true}, {t: picks[0], ok: false}, {t: picks[1], ok: false}]);
+  answers = opts.map((o, i) => ({
+    ...o, letter: 'ABC'[i], x: [W * .21, W * .5, W * .79][i], y: H * .56, R: 50,
+    spent: false, respawnAt: 0, phase: i * 2.1
+  }));
+}
+
+function spawnPop(x, y, color, big){
+  const n = big ? 12 : 7;
+  for(let i = 0; i < n; i++){
+    const a = Math.random() * 6.28, sp = 1.5 + Math.random() * (big ? 4 : 2.5);
+    particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1, color, t: 0, r: 2 + Math.random() * 3 });
+  }
+  popups.push({ x, y: y - 8, text: big ? '+25' : '+6', t: 0, color: big ? '#ffe259' : '#ffffff' });
+}
+
+function addScore(n){
+  score += n;
+  $('#scoreChip').textContent = '🏅 ' + String(score).padStart(3, '0');
+}
+
+function hitAny(x, y, r){
+  for(const a of answers)
+    if(!a.spent && Math.hypot(x - a.x, y - ansY(a, performance.now())) < r + a.R) return a;
+  for(const b of decos)
+    if(Math.hypot(x - b.x, y - b.y) < r + b.r) return b;
+  return null;
+}
+
+function fire(ang){
+  if(state !== 'aim') return;
+  state = 'flying';
+  proj = { x: SX, y: SY, dx: Math.cos(ang), dy: Math.sin(ang), color: ammoColor };
+  ammoColor = pick(CANDY);
+  note(300, 0, .09, 'triangle', .1);
+}
+
+function onCorrect(a, now){
+  state = 'celebrate';
+  addScore(25);
+  spawnPop(a.x, ansY(a, now), '#ffd700', true);
+  playCorrect();
+  centerMsg = { text: '¡CORRECTO! 🎉', sub: pick(PRAISES), t: 0, color: '#ffe259' };
+  const rect = cv.getBoundingClientRect();
+  burst(rect.left + (a.x / W) * rect.width, rect.top + (ansY(a, now) / H) * rect.height);
+  // cascada: explota todo el campo
+  const all = [...decos, ...answers.filter(x => !x.spent)];
+  all.forEach((b, i) => setTimeout(() => {
+    spawnPop(b.x, b.R ? ansY(b, performance.now()) : b.y, b.color || '#ffd700');
+    addScore(6);
+    note(500 + Math.random() * 500, 0, .05, 'triangle', .07);
+  }, 120 + i * 28));
+  decos = [];
+  answers.forEach(x => x.spent = true);
+  const fb = $('#feedback');
+  fb.textContent = ''; fb.className = 'feedback';
+  const cur = $('#dots').children[idx];
+  if(cur){ cur.classList.remove('current'); cur.classList.add('done'); }
+  $('#nextBtn').classList.add('show');
+}
+
+function onWrong(a, now){
+  totalWrong++;
+  a.spent = true; a.respawnAt = now + 1500;
+  spawnPop(a.x, ansY(a, now), '#ef5350', true);
+  popups.push({ x: a.x, y: ansY(a, now) - 34, text: '✖', t: 0, color: '#ff8a75' });
+  playWrong();
+  const fb = $('#feedback');
+  fb.textContent = 'INTENTA DE NUEVO 💫';
+  fb.className = 'feedback bad';
+  $('#field').classList.remove('shake'); void $('#field').offsetWidth; $('#field').classList.add('shake');
+}
+
+function update(dt, now){
+  for(const a of answers)
+    if(a.spent && a.respawnAt && now > a.respawnAt){ a.spent = false; a.respawnAt = 0; }
+  particles = particles.filter(p => (p.t += dt) < 620);
+  particles.forEach(p => { p.x += p.vx * dt / 16.7; p.y += p.vy * dt / 16.7; p.vy += .12 * dt / 16.7; });
+  popups = popups.filter(p => (p.t += dt) < 900);
+  if(centerMsg && (centerMsg.t += dt) > 1500) centerMsg = null;
+  if(now - lastPop > 1400) combo = 0;
+
+  if(state === 'flying' && proj){
+    const sp = 11 * dt / 16.7;
+    proj.x += proj.dx * sp; proj.y += proj.dy * sp;
+    if(proj.x < PROJ_R){ proj.x = PROJ_R; proj.dx *= -1; }
+    if(proj.x > W - PROJ_R){ proj.x = W - PROJ_R; proj.dx *= -1; }
+    if(proj.y <= TOP_LIMIT){ spawnPop(proj.x, TOP_LIMIT, proj.color); proj = null; state = 'aim'; return; }
+    const hit = hitAny(proj.x, proj.y, PROJ_R);
+    if(hit){
+      if(hit.R){ // burbuja de respuesta
+        proj = null;
+        if(hit.ok) onCorrect(hit, now);
+        else { onWrong(hit, now); state = 'aim'; }
+      }else{
+        decos = decos.filter(b => b !== hit);
+        spawnPop(hit.x, hit.y, hit.color);
+        addScore(6);
+        combo++; lastPop = now;
+        note(380 + Math.min(combo, 8) * 60, 0, .07, 'triangle', .12);
+        if(combo === 3) centerMsg = { text: pick(PRAISES), sub: '', t: 0, color: '#ff8ac2' };
+        proj = null; state = 'aim';
+      }
+    }
+  }
+}
+
+function drawAimPath(){
+  let x = SX, y = SY, dx = Math.cos(aimAng), dy = Math.sin(aimAng);
+  const pts = [];
+  for(let i = 0; i < 200; i++){
+    x += dx * 6; y += dy * 6;
+    if(x < PROJ_R){ x = PROJ_R; dx *= -1; }
+    if(x > W - PROJ_R){ x = W - PROJ_R; dx *= -1; }
+    pts.push([x, y]);
+    if(y < TOP_LIMIT + 6 || hitAny(x, y, PROJ_R)) break;
+  }
+  const now = performance.now();
+  pts.forEach(([px, py], i) => {
+    if(i % 2) return;
+    ctx.globalAlpha = Math.max(.08, .75 * (1 - i / pts.length));
+    ctx.beginPath(); ctx.arc(px, py, 2.6, 0, 7);
+    ctx.fillStyle = '#fff'; ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
+
+function draw(now){
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#251b62'); g.addColorStop(.55, '#1c1349'); g.addColorStop(1, '#140c36');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  // estrellitas
+  for(const s of stars){
+    ctx.globalAlpha = .25 + .3 * Math.abs(Math.sin(now / 700 + s.ph));
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7);
+    ctx.fillStyle = '#fff'; ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // burbujas decorativas (aparecen con rebote)
+  for(const b of decos){
+    const age = now - b.born;
+    if(age < 0) continue;
+    const s = Math.min(1, age / 220);
+    ctx.globalAlpha = s;
+    drawBubble(b.x, b.y - (1 - s) * 30, b.r * (.6 + .4 * s), b.color);
+  }
+  ctx.globalAlpha = 1;
+  // burbujas de respuesta (todas doradas: el color NO delata la correcta)
+  for(const a of answers){
+    if(a.spent) continue;
+    const y = ansY(a, now);
+    drawBubble(a.x, y, a.R, '#ffca28');
+    ctx.save();
+    ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 16;
+    ctx.beginPath(); ctx.arc(a.x, y, a.R, 0, 7);
+    ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 4; ctx.stroke();
+    ctx.restore();
+    ctx.font = '700 40px "Yatra One", "Tiro Devanagari Hindi", serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 5;
+    ctx.fillText(a.letter, a.x, y + 2);
+    ctx.shadowBlur = 0;
+  }
+  // proyectil
+  if(proj) drawBubble(proj.x, proj.y, PROJ_R, proj.color);
+  // partículas
+  for(const p of particles){
+    ctx.globalAlpha = 1 - p.t / 620;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7);
+    ctx.fillStyle = p.color; ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  // popups +6
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for(const p of popups){
+    ctx.globalAlpha = 1 - p.t / 900;
+    ctx.font = '700 19px "Yatra One", cursive';
+    ctx.fillStyle = p.color;
+    ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 4;
+    ctx.fillText(p.text, p.x, p.y - p.t / 22);
+  }
+  ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+  // mensaje central
+  if(centerMsg){
+    const s = Math.min(1, centerMsg.t / 180 + .3);
+    ctx.save();
+    ctx.translate(W / 2, H * .38); ctx.scale(s, s);
+    ctx.globalAlpha = centerMsg.t > 1100 ? 1 - (centerMsg.t - 1100) / 400 : 1;
+    ctx.font = '42px "Yatra One", cursive';
+    ctx.fillStyle = centerMsg.color;
+    ctx.shadowColor = 'rgba(0,0,0,.7)'; ctx.shadowBlur = 10;
+    ctx.fillText(centerMsg.text, 0, 0);
+    if(centerMsg.sub){
+      ctx.font = '22px "Yatra One", cursive';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(centerMsg.sub, 0, 40);
+    }
+    ctx.restore();
+  }
+  // cañón
+  ctx.fillStyle = '#311b92';
+  ctx.beginPath(); ctx.roundRect(SX - 36, H - 44, 72, 28, 12); ctx.fill();
+  ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 2.5; ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(SX, H - 10, 46, 10, 0, 0, 7);
+  ctx.fillStyle = 'rgba(255,215,0,.14)'; ctx.fill();
+  if(state === 'aim') drawAimPath();
+  drawBubble(SX, SY, PROJ_R + 3, ammoColor);
+}
+
+let lastT = 0;
+function loop(now){
+  const dt = Math.min(40, now - lastT || 16.7); lastT = now;
+  if($('#screen-game').classList.contains('active')){
+    update(dt, now);
+    draw(now);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* entrada: mouse y táctil */
+function toGame(e){
+  const r = cv.getBoundingClientRect();
+  return { x: (e.clientX - r.left) * (W / r.width), y: (e.clientY - r.top) * (H / r.height) };
+}
+cv.addEventListener('pointermove', e => {
+  const p = toGame(e);
+  let ang = Math.atan2(p.y - SY, p.x - SX);
+  const MIN = -Math.PI + .18, MAX = -.18;
+  aimAng = Math.max(MIN, Math.min(MAX, ang));
+});
+cv.addEventListener('pointerdown', e => {
+  if(state !== 'aim') return;
+  const p = toGame(e);
+  let ang = Math.atan2(p.y - SY, p.x - SX);
+  if(ang > -.15 || ang < -Math.PI + .15) return;
+  fire(ang);
+});
+cv.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ---------- flujo del juego ---------- */
+function renderDots(){
+  $('#dots').innerHTML = deck.map((_, i) =>
+    `<span class="dot ${i < idx ? 'done' : ''} ${i === idx ? 'current' : ''}"></span>`).join('');
+}
+
+function renderQuestion(){
+  const qa = questions[deck[idx]];
+  $('#qNum').textContent = `Pregunta ${idx + 1} de ${deck.length} 📿`;
+  $('#qText').textContent = qa.q;
+  const banner = $('#qBanner');
+  banner.classList.remove('pop'); void banner.offsetWidth; banner.classList.add('pop');
+  renderDots();
+  layoutDecorative();
+  buildAnswers(qa, wrongCache[qa.q]);
+  $('#ansLegend').innerHTML = answers.map((a, i) =>
+    `<div class="ans-item"><span class="ans-chip">${a.letter}</span><span>${escapeHtml(a.t)}</span></div>`).join('');
+  $('#ansLegend').scrollTop = 0;
+  requestAnimationFrame(() => { $('#ansLegend').scrollTop = 0; });
+  particles = []; popups = []; centerMsg = null; proj = null;
+  state = 'aim';
+  const fb = $('#feedback');
+  fb.textContent = ''; fb.className = 'feedback';
+  $('#nextBtn').classList.remove('show');
+  $('#nextBtn').textContent = (idx === deck.length - 1) ? 'VER RESULTADOS 🏆' : 'SIGUIENTE ➡️';
+  $('#hint').textContent = HINT_BASE + aiNote;
+}
+
+async function startGame(from = -1){
+  if(!ensureQuestions()){ showScreen('setup'); return; }
+  localStorage.setItem(LS_KEY, $('#material').value);
+  localStorage.setItem('shotBubblesGroqKey', $('#groqKey').value);
+  localStorage.setItem('shotBubblesGroqModel', $('#groqModel').value);
+  deck = shuffle(questions.map((_, i) => i));
+  if(from >= 0){ deck = deck.filter(i => i !== from); deck.unshift(from); }
+  idx = 0; totalWrong = 0; score = 0; aiNote = '';
+  $('#scoreChip').textContent = '🏅 000';
+  const { key } = groqConfig();
+  const pending = deck.map(i => questions[i]).filter(qa => !wrongCache[qa.q]);
+  if(key && pending.length){
+    const btns = [$('#playBtn'), $('#dashPlayAllBtn')];
+    btns.forEach(b => { b.disabled = true; b.dataset.old = b.textContent; b.textContent = '🤖 Creando distractores…'; });
+    try{
+      const map = await fetchWrongAnswers(pending.map(qa => ({ q: qa.q, a: qa.a })));
+      pending.forEach((qa, k) => { if(map[k]) wrongCache[qa.q] = map[k]; });
+      const got = Object.keys(map).length;
+      if(got === 0)      aiNote = ' · ⚠️ La IA no respondió, usé distractores de tu material';
+      else if(got < pending.length) aiNote = ` · 🤖 IA usada en ${got} de ${pending.length} preguntas`;
+      else               aiNote = ' · 🤖 Distractores creados por IA';
+    }catch(err){
+      console.warn('Groq falló, uso distractores locales:', err);
+      aiNote = ' · ⚠️ La IA no respondió, usé distractores de tu material';
+    }
+    btns.forEach(b => { b.disabled = false; b.textContent = b.dataset.old; });
+  }
+  showScreen('game');
+  renderQuestion();
+}
+
+function next(){
+  if(state !== 'celebrate') return;
+  idx++;
+  if(idx >= deck.length) showWin(); else renderQuestion();
+}
+
+function showWin(){
+  const total = deck.length, acc = Math.round(total / (total + totalWrong) * 100);
+  let msg;
+  if(totalWrong === 0)      msg = '¡Eres un GURÚ LEGENDARIO! 🏆🕉️ Sin errores, ¡meditación perfecta!';
+  else if(totalWrong <= 3)  msg = '¡Sabio erudito! 📿✨ Casi sin fallos, el conocimiento fluye en ti.';
+  else                      msg = '¡La práctica hace al maestro! 🧘‍♂️💪 Repite el mantra y mejorarás.';
+  $('#winMsg').textContent = msg;
+  $('#winStats').innerHTML = `
+    <div class="stat"><div class="num">${total}</div><div class="lbl">🪷 PREGUNTAS</div></div>
+    <div class="stat"><div class="num">${totalWrong}</div><div class="lbl">💫 ERRORES</div></div>
+    <div class="stat"><div class="num">${acc}%</div><div class="lbl">🎯 PRECISIÓN</div></div>
+    <div class="stat"><div class="num">${score}</div><div class="lbl">🏅 PUNTOS</div></div>`;
+  showScreen('win');
+  for(let i = 0; i < 5; i++)
+    setTimeout(() => burst(Math.random() * innerWidth, Math.random() * innerHeight * .6), i * 220);
+  note(523,0,.2); note(659,.15,.2); note(784,.3,.2); note(1047,.45,.5);
+}
+
+/* ---------- dashboard ---------- */
+function openDash(){
+  if(!ensureQuestions()){ showScreen('setup'); return; }
+  localStorage.setItem(LS_KEY, $('#material').value);
+  const list = $('#dashList'); list.innerHTML = '';
+  questions.forEach((qa, i) => {
+    const row = document.createElement('div');
+    row.className = 'dash-row';
+    row.innerHTML = `
+      <span class="dash-num">${i + 1}</span>
+      <div class="dash-text">
+        <div class="dash-q">${escapeHtml(qa.q)}</div>
+        <div class="dash-a">📿 ${escapeHtml(qa.a)}</div>
+      </div>
+      <button class="play-btn" title="Jugar esta pregunta">▶️</button>`;
+    row.querySelector('.play-btn').onclick = () => startGame(i);
+    list.appendChild(row);
+  });
+  $('#dashCount').textContent = `${questions.length} pregunta${questions.length === 1 ? '' : 's'} ✨`;
+  showScreen('dash');
+}
+
+/* ---------- confeti ---------- */
+function burst(x, y){
+  const em = ['✨','🎉','⭐','🪔','💛','🫧','🪷'];
+  for(let i = 0; i < 16; i++){
+    const s = document.createElement('span');
+    s.className = 'particle';
+    s.textContent = em[Math.floor(Math.random() * em.length)];
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    const ang = Math.random() * Math.PI * 2, dist = 70 + Math.random() * 140;
+    s.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+    s.style.setProperty('--dy', (Math.sin(ang) * dist - 60) + 'px');
+    s.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1300);
+  }
+}
+
+/* ---------- decoración de fondo ---------- */
+function buildBackground(){
+  const DEVA = 'ॐ अ आ इ ई उ ऊ ऋ ए ऐ ओ औ अं अः क ख ग घ ङ च छ ज झ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह क्ष त्र ज्ञ श्र ० १ २ ३ ४ ५ ६ ७ ८ ९'.split(' ');
+  const rand = (a, b) => a + Math.random() * (b - a);
+  for(let i = 0; i < 30; i++){
+    const s = document.createElement('span');
+    s.className = 'fchar';
+    s.textContent = DEVA[Math.floor(Math.random() * DEVA.length)];
+    s.style.setProperty('--x', rand(0, 98) + 'vw');
+    s.style.setProperty('--s', rand(15, 44) + 'px');
+    s.style.setProperty('--o', rand(.12, .4));
+    s.style.setProperty('--d', rand(14, 30) + 's');
+    s.style.setProperty('--dl', rand(-30, 0) + 's');
+    s.style.setProperty('--sway', rand(-70, 70) + 'px');
+    document.body.appendChild(s);
+  }
+  ['🪔','📿','🪷','✨','🎇','🕉️','🪔','🪷'].forEach(e => {
+    const s = document.createElement('span');
+    s.className = 'femo';
+    s.textContent = e;
+    s.style.setProperty('--x', rand(0, 96) + 'vw');
+    s.style.setProperty('--s', rand(18, 34) + 'px');
+    s.style.setProperty('--o', rand(.2, .5));
+    s.style.setProperty('--d', rand(18, 34) + 's');
+    s.style.setProperty('--dl', rand(-34, 0) + 's');
+    s.style.setProperty('--sway', rand(-60, 60) + 'px');
+    document.body.appendChild(s);
+  });
+  const glows = [['#ff9933','12vw'],['#ffd700','9vw'],['#8b5cf6','14vw'],['#ff5722','8vw'],['#ffd700','7vw'],['#c2185b','10vw']];
+  glows.forEach(([c, size], i) => {
+    const g = document.createElement('div');
+    g.className = 'glow';
+    g.style.background = c; g.style.width = size; g.style.height = size;
+    g.style.left = rand(0, 85) + 'vw'; g.style.top = rand(0, 85) + 'vh';
+    g.style.animationDelay = (i * 1.1) + 's';
+    document.body.appendChild(g);
+  });
+  const gar = $('#garland');
+  for(let i = 0; i < 42; i++){
+    const sp = document.createElement('span');
+    sp.textContent = (i % 10 === 4) ? '🪔' : '🌼';
+    sp.style.animationDelay = (i * .18) + 's';
+    gar.appendChild(sp);
+  }
+  document.querySelectorAll('.mandala .petals').forEach(g => {
+    for(let i = 0; i < 12; i++){
+      const e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      e.setAttribute('cx', 100); e.setAttribute('cy', 54);
+      e.setAttribute('rx', 11); e.setAttribute('ry', 26);
+      e.setAttribute('transform', `rotate(${i * 30} 100 100)`);
+      g.appendChild(e);
+    }
+  });
+}
+
+/* ---------- eventos ---------- */
+$('#playBtn').onclick        = () => startGame();
+$('#dashBtn').onclick        = openDash;
+$('#dashPlayAllBtn').onclick = () => startGame();
+$('#dashBackBtn').onclick    = () => showScreen('setup');
+$('#nextBtn').onclick        = next;
+$('#againBtn').onclick       = () => startGame();
+$('#winDashBtn').onclick     = openDash;
+$('#winEditBtn').onclick     = () => showScreen('setup');
+$('#homeBtn').onclick        = () => showScreen('setup');
+$('#clearBtn').onclick       = () => { $('#material').value = ''; localStorage.removeItem(LS_KEY); $('#setupMsg').textContent = ''; $('#material').focus(); };
+$('#muteBtn').onclick        = () => { muted = !muted; $('#muteBtn').textContent = muted ? '🔇' : '🔊'; };
+$('#material').addEventListener('input', () => localStorage.setItem(LS_KEY, $('#material').value));
+
+/* ---------- inicio ---------- */
+const sample = `¿Capital de Francia? | París
+¿Río más largo del mundo? | El Amazonas
+¿Planeta rojo? | Marte
+¿Autor de "Don Quijote"? | Cervantes
+¿Moneda de Japón? | El yen
+¿Órgano que bombea la sangre? | El corazón`;
+$('#material').value = localStorage.getItem(LS_KEY) || sample;
+$('#groqKey').value = localStorage.getItem('shotBubblesGroqKey') || '';
+$('#groqModel').value = localStorage.getItem('shotBubblesGroqModel') || 'qwen/qwen3.8-27b';
+buildBackground();
+</script>
+</body>
+</html>
